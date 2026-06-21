@@ -1,0 +1,251 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background: #fff8f0;
+  color: #333;
+}
+
+nav {
+  background: brown;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 1em;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background 0.2s;
+}
+
+nav a:hover, nav a.active { background: dodgerblue; }
+
+header {
+  background: dodgerblue;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+header h1 { font-size: 3em; }
+
+header p {
+  font-size: 1.2em;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+.paw-banner {
+  text-align: center;
+  font-size: 2em;
+  padding: 10px;
+  background: #ffe0b2;
+  letter-spacing: 8px;
+}
+
+.section {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.section h2 {
+  color: dodgerblue;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  border-bottom: 3px solid brown;
+  padding-bottom: 5px;
+}
+
+.facts-list { list-style: none; padding: 0; }
+
+.facts-list li {
+  background: white;
+  border-left: 5px solid dodgerblue;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  font-size: 1.05em;
+}
+
+.dog-emoji-box {
+  text-align: center;
+  font-size: 6em;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.dog-emoji-box:hover { transform: scale(1.05); }
+
+.bark-message {
+  text-align: center;
+  font-size: 1.4em;
+  color: brown;
+  font-weight: bold;
+  min-height: 40px;
+  margin: 20px 0;
+  transition: opacity 0.3s;
+}
+
+.comment-section {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  border: 2px solid dodgerblue;
+  border-radius: 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+button {
+  background: dodgerblue;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background 0.2s;
+}
+
+button:hover { background: brown; }
+
+#comments-display { margin-top: 20px; }
+
+.comment-bubble {
+  background: #e3f2fd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-left: 4px solid dodgerblue;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  object-fit: cover;
+  aspect-ratio: 1;
+  transition: transform 0.2s;
+}
+
+.gallery img:hover { transform: scale(1.04); }
+
+.gallery-placeholder {
+  background: #e3f2fd;
+  border-radius: 12px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  border: 2px dashed dodgerblue;
+}
+
+/* Quiz */
+.score-box {
+  background: white;
+  border-left: 5px solid dodgerblue;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: dodgerblue;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.quiz-box {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.quiz-box h3 {
+  font-size: 1.1em;
+  margin-bottom: 14px;
+  color: brown;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  background: #fff8f0;
+  border: 2px solid dodgerblue;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  transition: background 0.2s;
+  color: #333;
+}
+
+.quiz-option:hover:not(:disabled) { background: dodgerblue; color: white; }
+.quiz-option.correct { background: #c8f7c5; border-color: green; color: green; }
+.quiz-option.wrong { background: #ffd6d6; border-color: red; color: red; }
+
+.quiz-feedback {
+  margin-top: 12px;
+  font-weight: bold;
+  min-height: 24px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  background: dodgerblue;
+  color: white;
+  margin-top: 60px;
+  font-size: 0.95em;
+}
+
+@media (max-width: 500px) {
+  header h1 { font-size: 2em; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  nav a { font-size: 0.9em; padding: 6px 14px; }
+}

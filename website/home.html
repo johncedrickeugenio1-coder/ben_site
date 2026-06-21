@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben's Dog Site</title>
+  <link rel="stylesheet" href="ben.css">
+</head>
+<body>
+
+  <nav>
+    <a href="home.html" class="active">🏠 Home</a>
+    <a href="ben'sgallery.html">📸 Photo Gallery</a>
+    <a href="benquiz.html">🧠 Ben Quiz</a>
+  </nav>
+
+  <header>
+    <h1>🐶 Ben's Website</h1>
+    <p>The official site of the world's best dog</p>
+  </header>
+
+  <div class="paw-banner">🐾 🐾 🐾 🐾 🐾</div>
+
+  <div class="section">
+    <div class="dog-emoji-box" onclick="bark()" title="Click me!">🐕</div>
+    <div class="bark-message" id="bark-msg"></div>
+
+    <h2>About Ben</h2>
+    <ul class="facts-list">
+      <li>🦴 Loves to chew on bones</li>
+      <li>🏃 Super fast runner</li>
+      <li>😴 Professional napper</li>
+      <li>🎾 Ball obsessed since day one</li>
+      <li>❤️ Best boy in the whole world</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Leave a Comment for Ben</h2>
+    <div class="comment-section">
+      <textarea id="comment-input" placeholder="Tell Ben what a good boy he is..."></textarea>
+      <button onclick="submitComment()">Submit 🐾</button>
+      <div id="comments-display"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>🐶 Ben's Official Website &copy; 2026 &nbsp;|&nbsp; Made with ❤️ and lots of treats</p>
+  </footer>
+
+  <script src="ben.js"></script>
+</body>
+</html>

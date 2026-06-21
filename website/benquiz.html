@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben's Dog Site - Quiz</title>
+  <link rel="stylesheet" href="ben.css">
+</head>
+<body>
+
+  <nav>
+    <a href="home.html">🏠 Home</a>
+    <a href="ben'sgallery.html">📸 Photo Gallery</a>
+    <a href="benquiz.html" class="active">🧠 Ben Quiz</a>
+  </nav>
+
+  <header>
+    <h1>🧠 Ben Quiz</h1>
+    <p>How well do you know Ben?</p>
+  </header>
+
+  <div class="paw-banner">🐾 🐾 🐾 🐾 🐾</div>
+
+  <div class="section">
+    <div class="score-box" id="score-box">Score: 0 / 5</div>
+
+    <div class="quiz-box">
+      <h3>Question 1: What is Ben's favourite activity?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'q1')">Cuddle 🤗</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q1')">Doing tricks 🐕</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q1')">Catching frisbees 🥏</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q1')">Napping 🛏️</button>
+      </div>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+
+    <div class="quiz-box">
+      <h3>Question 2: What kind of animal is Ben?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'q2')">Cat 🐱</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q2')">Hamster 🐹</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q2')">Stinky Dog 🐶</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q2')">Parrot 🦜</button>
+      </div>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+
+    <div class="quiz-box">
+      <h3>Question 3: What is Ben's favourite toy?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'q3')">Teddy bear 🧸</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q3')">Ball 🎾</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q3')">Frisbee 🥏</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q3')">Banana 🍌</button>
+      </div>
+      <div class="quiz-feedback" id="q3-feedback"></div>
+    </div>
+
+    <div class="quiz-box">
+      <h3>Question 4: What is Ben best at?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'q4')">Barking 🐕</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q4')">Running 🏃</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q4')">Napping 😴</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q4')">Catching balls 🏀</button>
+      </div>
+      <div class="quiz-feedback" id="q4-feedback"></div>
+    </div>
+
+    <div class="quiz-box">
+      <h3>Question 5: How would you describe Ben?</h3>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'q5')">Grumpy 😤</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q5')">Shy 🫣</button>
+        <button class="quiz-option" onclick="answer(this, false, 'q5')">Lazy 🥱</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q5')">Best boy ever ❤️</button>
+        <button class="quiz-option" onclick="answer(this, true, 'q5')">Stinky boy 🤢</button>
+      </div>
+      <div class="quiz-feedback" id="q5-feedback"></div>
+    </div>
+
+    <button onclick="resetQuiz()" style="width:100%; margin-bottom:20px;">🔄 Restart Quiz</button>
+  </div>
+
+  <footer>
+    <p>🐶 Ben's Official Website &copy; 2026 &nbsp;|&nbsp; Made with ❤️ and lots of treats</p>
+  </footer>
+
+  <script src="ben.js"></script>
+</body>
+</html>
