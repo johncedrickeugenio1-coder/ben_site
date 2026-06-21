@@ -44,33 +44,63 @@ function openGalleryDB() {
   });
 }
 
-function saveGalleryImageToDB(dataUrl) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const db = await openGalleryDB();
-      const transaction = db.transaction(GALLERY_STORE_NAME, "readwrite");
-      const store = transaction.objectStore(GALLERY_STORE_NAME);
-      const request = store.add({ image: dataUrl });
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-    } catch (error) {
-      reject(error);
-    }
+async function saveGalleryImageToDB(dataUrl) {
+  const db = await openGalleryDB();
+  const transaction = db.transaction(GALLERY_STORE_NAME, "readwrite");
+  const store = transaction.objectStore(GALLERY_STORE_NAME);
+
+  return new Promise((resolve, reject) => {
+    const request = store.add({ image: dataUrl });
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
   });
 }
 
-function loadGalleryImagesFromDB() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const db = await openGalleryDB();
-      const transaction = db.transaction(GALLERY_STORE_NAME, "readonly");
-      const store = transaction.objectStore(GALLERY_STORE_NAME);
-      const request = store.getAll();
-      request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(request.error);
-    } catch (error) {
-      reject(error);
-    }
+async function loadGalleryImagesFromDB() {
+  const db = await openGalleryDB();
+  const transaction = db.transaction(GALLERY_STORE_NAME, "readonly");
+  const store = transaction.objectStore(GALLERY_STORE_NAME);
+
+  return new Promise((resolve, reject) => {
+    const request = store.getAll();
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function convertImageToDataUrl(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+  }
+
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+async function seedGalleryWithDefaultImages() {
+  const defaultImages = ["ben.jpg", "ben2.jpg"];
+
+  for (const image of defaultImages) {
+    const dataUrl = await convertImageToDataUrl(image);
+    await saveGalleryImageToDB(dataUrl);
+  }
+}
+
+function createPlaceholderGallery() {
+  const gallery = document.getElementById("gallery");
+  if (!gallery) return;
+
+  gallery.innerHTML = "";
+  ["🐕", "🦴", "🐾"].forEach(icon => {
+    const placeholder = document.createElement("div");
+    placeholder.className = "gallery-placeholder";
+    placeholder.textContent = icon;
+    gallery.appendChild(placeholder);
   });
 }
 
@@ -78,8 +108,13 @@ function renderGallery(images) {
   const gallery = document.getElementById("gallery");
   if (!gallery) return;
 
-  gallery.querySelectorAll(".gallery-placeholder").forEach(p => p.remove());
   gallery.querySelectorAll("img").forEach(img => img.remove());
+  gallery.querySelectorAll(".gallery-placeholder").forEach(p => p.remove());
+
+  if (!images || images.length === 0) {
+    createPlaceholderGallery();
+    return;
+  }
 
   images.forEach(item => {
     const img = document.createElement("img");
@@ -92,26 +127,38 @@ function renderGallery(images) {
 async function loadGalleryImages() {
   try {
     const images = await loadGalleryImagesFromDB();
+    if (images.length === 0) {
+      await seedGalleryWithDefaultImages();
+      const seededImages = await loadGalleryImagesFromDB();
+      renderGallery(seededImages);
+      return;
+    }
+
     renderGallery(images);
   } catch (error) {
     console.error("Failed to load gallery images:", error);
+    createPlaceholderGallery();
   }
 }
 
 async function addPhotos() {
   const input = document.getElementById("photo-input");
-  const gallery = document.getElementById("gallery");
-  if (!input || !gallery) return;
-  const files = input.files;
-  if (files.length === 0) { alert("Please choose at least one photo first!"); return; }
+  if (!input) return;
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+  const files = Array.from(input.files || []);
+  if (files.length === 0) {
+    alert("Please choose at least one photo first!");
+    return;
+  }
+
+  for (const file of files) {
     if (!file.type.startsWith("image/")) continue;
 
     const reader = new FileReader();
-    reader.onload = async function(e) {
-      const dataUrl = e.target.result;
+    reader.onload = async function(event) {
+      const dataUrl = event.target?.result;
+      if (typeof dataUrl !== "string") return;
+
       try {
         await saveGalleryImageToDB(dataUrl);
         await loadGalleryImages();
@@ -121,6 +168,7 @@ async function addPhotos() {
     };
     reader.readAsDataURL(file);
   }
+
   input.value = "";
 }
 
