@@ -83,7 +83,7 @@ async function convertImageToDataUrl(url) {
   });
 }
 async function seedGalleryWithDefaultImages() {
-  const defaultImages = ["ben.jpg", "ben2.jpg"];
+  const defaultImages = ["ben.jpg", "ben2.jpg", "ben3.jpg", "ben4.jpg", "ben5.jpg"];
 
   for (const image of defaultImages) {
     const dataUrl = await convertImageToDataUrl(image);
