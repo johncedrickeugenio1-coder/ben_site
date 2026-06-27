@@ -7,6 +7,7 @@ const barks = [
 const GALLERY_DB_NAME = "benGalleryDB";
 const GALLERY_STORE_NAME = "images";
 const GALLERY_DB_VERSION = 1;
+const DEFAULT_GALLERY_IMAGES = ["ben.jpg", "ben2.jpg", "ben3.jpg", "ben4.jpg", "ben5.jpg"];
 
 function bark() {
   const msg = document.getElementById("bark-msg");
@@ -82,12 +83,17 @@ async function convertImageToDataUrl(url) {
     reader.readAsDataURL(blob);
   });
 }
-async function seedGalleryWithDefaultImages() {
-  const defaultImages = ["ben.jpg", "ben2.jpg", "ben3.jpg", "ben4.jpg", "ben5.jpg"];
+function getDefaultGalleryImages() {
+  return DEFAULT_GALLERY_IMAGES.map(image => ({ image }));
+}
 
-  for (const image of defaultImages) {
-    const dataUrl = await convertImageToDataUrl(image);
-    await saveGalleryImageToDB(dataUrl);
+async function seedGalleryWithDefaultImages() {
+  for (const image of DEFAULT_GALLERY_IMAGES) {
+    try {
+      await saveGalleryImageToDB(image);
+    } catch (error) {
+      console.warn(`Could not seed gallery with ${image}:`, error);
+    }
   }
 }
 
@@ -125,19 +131,25 @@ function renderGallery(images) {
 }
 
 async function loadGalleryImages() {
+  const defaultImages = getDefaultGalleryImages();
+
   try {
     const images = await loadGalleryImagesFromDB();
     if (images.length === 0) {
       await seedGalleryWithDefaultImages();
-      const seededImages = await loadGalleryImagesFromDB();
-      renderGallery(seededImages);
+      renderGallery(defaultImages);
       return;
     }
 
-    renderGallery(images);
+    const galleryImages = [
+      ...defaultImages,
+      ...images.filter(item => !defaultImages.some(defaultItem => defaultItem.image === item.image))
+    ];
+
+    renderGallery(galleryImages);
   } catch (error) {
     console.error("Failed to load gallery images:", error);
-    createPlaceholderGallery();
+    renderGallery(defaultImages);
   }
 }
 
